@@ -1,4 +1,4 @@
-# my-project
+# budget-website
 
 ## Project setup
 ```
