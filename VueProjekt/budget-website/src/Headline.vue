@@ -1,6 +1,8 @@
 <template>
     <div id="headlineContainer">
-        <h1>FINANZ <br> ÜBERSICHT</h1>
+        <div class="ContainerContent">
+            <h1>FINANZ <br> ÜBERSICHT</h1>
+        </div>
     </div>
 </template>
 
@@ -18,21 +20,17 @@
 <style scoped>
 
 #headlineContainer{
-    margin:1.5%;
-    padding:24px;
     border-radius: 10px;
-    width: 30%;
-    height: 170px;
-    float:left;
+    width: 100%;
+    height: 200px;
+    margin-top: 10px;
+    /*background-color: white;*/
 }
 
 h1{
     font-size: 4vw;
     margin-bottom: 10px;
-}
-
-p{
-    text-align: justify;
+    color: #2E3754;
 }
 
 </style>

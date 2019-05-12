@@ -1,5 +1,5 @@
 <template>
-    <div id="chart1Container">
+    <div id="chart4Container">
         <div class="ContainerContent">
             <p>test</p>
         </div>
@@ -8,7 +8,7 @@
 
 <script>
     export default{
-        name:"chart1",
+        name:"chart4",
         data(){
             return{
 
@@ -19,11 +19,12 @@
 
 <style scoped>
 
-#chart1Container{
-    background-color: white;
+#chart4Container{
     border-radius: 10px;
     height: 200px;
     margin-top: 10px;
+    width: 100%;
+    background-color: white;
 }
 
 </style>

@@ -1,13 +1,15 @@
 <template>
     <div id="chart2Container">
-        <div id="content1">test</div>
-        <div id="content2">test</div>
+        <div class="ContainerContent">
+            <div id="content1">test</div>
+            <div id="content2">test</div>
+        </div>
     </div>
 </template>
 
 <script>
     export default{
-        name:"chart1",
+        name:"chart2",
         data(){
             return{
 
@@ -19,23 +21,26 @@
 <style scoped>
 
 #chart2Container{
-    margin:1.5%;
     border-radius: 10px;
-    width: 23%;
-    height: 170px;
-    float:left;
+    height: 200px;
+    margin-top: 10px;
+    width: 100%;
 }
 
 #content1, #content2{
     background-color:white;
-    width: 100%;
-    height: 75px;
+    height: 90px;
     border-radius:10px;
-    padding: 12px;
+    width: 100%;
+    padding: 15px;
 }
 
 #content1{
     margin-bottom:20px;
 }
+
+.ContainerContent{
+    padding: 0px !important;
+  }
 
 </style>

@@ -2,6 +2,7 @@
 <html>
   <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300|Montserrat:300|Muli:200,300|Poppins:200,300" rel="stylesheet"> 
+    <link rel="stylesheet" href="src\assets\bootstrap.min.css">
   </head>
   <body>
     <div id="nav">
@@ -13,9 +14,19 @@
       </ul>
     </div>
     <div id="content">
-      <HeadlineComponent></HeadlineComponent>
-      <Chart1Component></Chart1Component>
-      <Chart2Component></Chart2Component>
+      <div class="row top-buffer">
+        <div class="col-sm-4" style="height:220px;"><HeadlineComponent></HeadlineComponent></div>
+        <div class="col-sm-4" style="height:220px;"><Chart1Component></Chart1Component></div>
+        <div class="col-sm-4" style="height:220px;"><Chart2Component></Chart2Component></div>
+      </div>
+      <div class="row top-buffer">
+        <div class="col-sm-6" style="height:220px;"><Chart3Component></Chart3Component></div>
+        <div class="col-sm-6" style="height:220px;"><Chart4Component></Chart4Component></div>
+      </div>
+      <div class="row top-buffer">
+        <div class="col-sm-12" style="height:220px;"><Chart5Component></Chart5Component></div>
+      </div>
+      
     </div>
   </body>
 </html>
@@ -25,18 +36,29 @@
   import HeadlineComponent from "@/Headline.vue"
   import Chart1Component from "@/Chart1.vue"
   import Chart2Component from "@/Chart2.vue"
+  import Chart3Component from "@/Chart3.vue"
+  import Chart4Component from "@/Chart4.vue"
+  import Chart5Component from "@/Chart5.vue"
 
   export default{
     name: "Budget Website",
     components:{
       HeadlineComponent,
       Chart1Component,
-      Chart2Component
+      Chart2Component,
+      Chart3Component,
+      Chart4Component,
+      Chart5Component
     },
     data(){
       return{
 
       };
+    },
+    mounted() {
+      let recaptchaScript = document.createElement('script')
+      recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js')
+      document.head.appendChild(recaptchaScript)
     },
     methods:{
     }
@@ -61,9 +83,10 @@
   }
 
   body{
-    background-color: #EFEFEF;
-    font-family: 'Muli', sans-serif;
+    background-color: #EFEFEF !important;
+    font-family: 'Muli', sans-serif !important;
     font-weight:200;
+    height: 100%;
   }
 
   h1{
@@ -105,5 +128,12 @@
   #nav .active{
     background-color: #29B5B8;
   }
+
+  .ContainerContent{
+    padding: 15px;
+  }
+
+  .top-buffer { margin-top:10px; }
+
 
 </style>
