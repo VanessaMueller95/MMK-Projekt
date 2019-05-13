@@ -1,7 +1,7 @@
 <template>
     <div id="chart1Container">
         <div class="ContainerContent">
-            <p>test</p>
+            <p>RESTBUDGET DIAGRAMM</p>
         </div>
     </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
     <div id="chart5Container">
         <div class="ContainerContent">
-            <p>test</p>
+            <p>LINE/BAR DIAGRAMM MONATSÜBERSICHT</p>
         </div>
     </div>
 </template>

@@ -2,15 +2,14 @@
 <html>
   <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300|Montserrat:300|Muli:200,300|Poppins:200,300" rel="stylesheet"> 
-    <link rel="stylesheet" href="src\assets\bootstrap.min.css">
   </head>
   <body>
     <div id="nav">
       <ul class="navlist">
-        <li class="active"><a href="#">ÜBERSICHT</a></li>
-        <li><a href="#">EINNAHMEN</a></li>
-        <li><a href="#">AUSGABEN</a></li>
-        <li><a href="#">EINSTELLUNGEN</a></li>
+        <li class="active"><a href="#"><img src="~@/assets/icon-uebersicht.png" height="20" width="20">ÜBERSICHT</a></li>
+        <li><a href="#"><img src="~@/assets/icon-einnahmen.png" height="20" width="20">EINNAHMEN</a></li>
+        <li><a href="#"><img src="~@/assets/icon-ausgaben.png" height="20" width="20">AUSGABEN</a></li>
+        <li><a href="#"><img src="~@/assets/icon-einstellungen.png" height="20" width="20">EINSTELLUNGEN</a></li>
       </ul>
     </div>
     <div id="content">
@@ -20,8 +19,8 @@
         <div class="col-sm-4" style="height:220px;"><Chart2Component></Chart2Component></div>
       </div>
       <div class="row top-buffer">
-        <div class="col-sm-6" style="height:220px;"><Chart3Component></Chart3Component></div>
-        <div class="col-sm-6" style="height:220px;"><Chart4Component></Chart4Component></div>
+        <div class="col-sm-8" style="height:220px;"><Chart3Component></Chart3Component></div>
+        <div class="col-sm-4" style="height:220px;"><Chart4Component></Chart4Component></div>
       </div>
       <div class="row top-buffer">
         <div class="col-sm-12" style="height:220px;"><Chart5Component></Chart5Component></div>
@@ -54,11 +53,6 @@
       return{
 
       };
-    },
-    mounted() {
-      let recaptchaScript = document.createElement('script')
-      recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js')
-      document.head.appendChild(recaptchaScript)
     },
     methods:{
     }
@@ -118,7 +112,7 @@
   }
 
   #nav li{
-    padding-left: 40px;
+    padding-left: 35px;
     padding-top: 12px;
     padding-bottom: 12px;
     margin-bottom: 15px;
@@ -126,7 +120,7 @@
   }
 
   #nav .active{
-    background-color: #29B5B8;
+    background-color: #F29940;
   }
 
   .ContainerContent{
@@ -135,5 +129,8 @@
 
   .top-buffer { margin-top:10px; }
 
+  a img{
+    margin-right: 15px;
+  }
 
 </style>

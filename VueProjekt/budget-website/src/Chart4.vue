@@ -1,7 +1,7 @@
 <template>
     <div id="chart4Container">
         <div class="ContainerContent">
-            <p>test</p>
+            <p>KALENDER</p>
         </div>
     </div>
 </template>

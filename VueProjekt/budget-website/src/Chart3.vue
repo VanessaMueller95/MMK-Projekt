@@ -1,7 +1,7 @@
 <template>
     <div id="chart3Container">
         <div class="ContainerContent">
-            <p>test</p>
+            <p>PIE CHART- MONATSAUSGABEN</p>
         </div>
     </div>
 </template>
