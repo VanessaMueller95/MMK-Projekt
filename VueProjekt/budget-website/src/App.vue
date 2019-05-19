@@ -23,7 +23,11 @@
         <div class="col-sm-4" style="height:220px;"><Chart4Component></Chart4Component></div>
       </div>
       <div class="row top-buffer">
-        <div class="col-sm-12" style="height:220px;"><Chart5Component></Chart5Component></div>
+        <div class="col-sm-12" style="height:220px;">
+          <Chart5Component v-if="this.line"></Chart5Component>
+          <Chart6Component v-if="!this.line"></Chart6Component>
+          <button @click="changeChart()">Change Chart</button>
+        </div>
       </div>
       
     </div>
@@ -38,6 +42,7 @@
   import Chart3Component from "@/Chart3.vue"
   import Chart4Component from "@/Chart4.vue"
   import Chart5Component from "@/Chart5.vue"
+  import Chart6Component from "@/Chart5-2.vue"
 
   export default{
     name: "Budget Website",
@@ -47,14 +52,22 @@
       Chart2Component,
       Chart3Component,
       Chart4Component,
-      Chart5Component
+      Chart5Component,
+      Chart6Component
     },
     data(){
       return{
-
+        line: false
       };
     },
     methods:{
+      changeChart () {
+        if(this.line==true){
+          this.line=false;
+        }else{
+          this.line=true;
+        }
+    }
     }
   };
 </script>

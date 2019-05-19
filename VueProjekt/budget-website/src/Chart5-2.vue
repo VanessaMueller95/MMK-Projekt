@@ -2,18 +2,18 @@
     <div id="chart5Container">
         <div class="ContainerContent">
             <p>MONATLICHE AUSGABEN 2018</p>
-            <line-chart :chartdata="this.chartconfig" :styles="myStyles" :options="this.options" :labels="this.labels"></line-chart>
+            <bar-chart :chartdata="this.chartconfig" :styles="myStyles" :options="this.options" :labels="this.labels"></bar-chart>
         </div>
     </div>
 </template>
 
 <script>
 
-  import LineChart from './LineChart.js'
+  import BarChart from './BarChart.js'
 
   export default {
     components: {
-      LineChart
+      BarChart
     },
     data () {
       return {
@@ -37,6 +37,7 @@
                     }
                 }],
                 xAxes: [{
+                    maxBarThickness: 40,
                     gridLines: {
                         display: false
                     }
@@ -46,9 +47,8 @@
         labels: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'August', 'September', 'Oktober', 'November', 'Dezember'],
         chartconfig: {
               label: 'Ausgaben',
-              pointBackgroundColor: '#F29A42',
-              borderWidth: 2,
-              pointBorderColor: '#F29A42',
+              borderWidth: 0,
+              barThickness: 2,
               data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(),]
             }
       }
@@ -56,21 +56,6 @@
     mounted () {
     },
     methods: {
-      fillData () {
-        this.datacollection = {
-          labels: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-          datasets: [
-            {
-              label: 'Ausgaben',
-              borderColor: 'blue',
-              pointBackgroundColor: 'rgba(19, 180,182, 1)',
-              borderWidth: 1,
-              pointBorderColor: 'black',
-              data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(),]
-            }
-          ]
-        }
-      },
       getRandomInt () {
         return Math.floor(Math.random() * (50 - 5 + 1)) + 5
       }
