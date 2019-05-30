@@ -24,7 +24,7 @@ import PieChart from "./PieChart.js";
                     fontFamily: 'Muli',
                     legend: {
                         display: true,
-                        position: 'right',
+                        position: 'left',
                         labels: {
                             usePointStyle: true,
                             padding: 50
