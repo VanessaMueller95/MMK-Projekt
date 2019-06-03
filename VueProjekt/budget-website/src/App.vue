@@ -12,6 +12,7 @@
         <li><a href="#"><img src="~@/assets/icon-einstellungen.png" height="20" width="20">EINSTELLUNGEN</a></li>
       </ul>
     </div>
+	<div id="app">	<Calendar />	</div>	
     <div id="content">
       <div class="row top-buffer">
         <div class="col-sm-4" style="height:220px;"><HeadlineComponent></HeadlineComponent></div>
@@ -20,7 +21,7 @@
       </div>
       <div class="row top-buffer">
         <div class="col-sm-8" style="height:220px;"><Chart3Component></Chart3Component></div>
-        <div class="col-sm-4" style="height:220px;"><Chart4Component></Chart4Component></div>
+        <div class="col-sm-4" style="height:310px;"><Calender></Calender></div>
       </div>
       <div class="row top-buffer">
         <div class="col-sm-12" style="height:220px;">
@@ -36,6 +37,7 @@
 </template>
 
 <script>
+  import Calender from "@/Calendar.vue"
   import HeadlineComponent from "@/Headline.vue"
   import Chart1Component from "@/Chart1.vue"
   import Chart2Component from "@/Chart2.vue"
@@ -43,17 +45,19 @@
   import Chart4Component from "@/Chart4.vue"
   import Chart5Component from "@/Chart5.vue"
   import Chart6Component from "@/Chart5-2.vue"
+  
 
   export default{
     name: "Budget Website",
-    components:{
-      HeadlineComponent,
-      Chart1Component,
-      Chart2Component,
-      Chart3Component,
-      Chart4Component,
-      Chart5Component,
-      Chart6Component
+    components:{ 
+		HeadlineComponent,
+		Chart1Component,
+		Chart2Component,
+		Chart3Component,
+		Chart4Component,
+		Chart5Component,
+		Chart6Component,
+		Calender
     },
     data(){
       return{
@@ -71,6 +75,7 @@
     }
   };
 </script>
+
 
 <style>
 

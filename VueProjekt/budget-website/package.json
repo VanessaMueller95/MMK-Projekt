@@ -10,16 +10,19 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "chart.js": "^2.8.0",
-    "core-js": "^2.6.5",
+    "core-js": "^2.6.9",
     "jquery": "^3.4.1",
+    "peer": "^0.2.10",
     "popper.js": "^1.15.0",
+    "sass": "^1.20.3",
+    "sass-loader": "^7.1.0",
     "vue": "^2.6.10",
     "vue-chartjs": "^3.4.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.6.0",
-    "@vue/cli-plugin-eslint": "^3.6.0",
-    "@vue/cli-service": "^3.6.0",
+    "@vue/cli-plugin-babel": "^3.8.0",
+    "@vue/cli-plugin-eslint": "^3.8.0",
+    "@vue/cli-service": "^3.8.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
