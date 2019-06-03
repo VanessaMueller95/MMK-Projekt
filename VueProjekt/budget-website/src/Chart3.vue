@@ -1,7 +1,7 @@
 <template>
     <div id="chart3Container">
         <div class="ContainerContent">
-            <p>MONATSAUSGABEN</p>
+            <p>MONATSAUSGABEN IM JUNI</p>
             <pie-chart :chartdata="this.chartconfig" :styles="myStyles" :options="this.options" :labels="this.labels"></pie-chart>
             <div id="chart-legends"></div>
         </div>
@@ -24,10 +24,10 @@ import PieChart from "./PieChart.js";
                     fontFamily: 'Muli',
                     legend: {
                         display: true,
-                        position: 'left',
+                        position: 'right',
                         labels: {
-                            usePointStyle: true,
-                            padding: 50
+                            padding: 10,
+                            usePointStyle: true
                                                 }
                     },
                     
@@ -52,8 +52,9 @@ import PieChart from "./PieChart.js";
     computed: {
     myStyles () {
       return {
-        height: `130px`,
-        position: 'right'
+        height: '150px',
+        width: '320px',
+        padding: '0px'
       }
     }
   }
@@ -68,6 +69,15 @@ import PieChart from "./PieChart.js";
     margin-top: 10px;
     width: 100%;
     background-color: white;
+}
+
+.ContainerContent{
+    height: 200px;
+}
+
+p{
+  padding-bottom: 0px;
+  margin-bottom: 5px;
 }
 
 </style>

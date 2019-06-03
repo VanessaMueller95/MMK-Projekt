@@ -63,7 +63,7 @@
     computed: {
     myStyles () {
       return {
-        height: `130px`,
+        height: `140px`,
         position: 'relative'
       }
     }
@@ -84,6 +84,26 @@
 
 .ContainerContent{
     height: 200px;
+}
+
+button{
+  position: absolute;
+  right: 65px;
+  top: 25px;
+  background-color:#F39B42;
+  border: none;
+  color: white;
+  padding: 5px 10px 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+button:hover{
+  background-color:rgb(235, 130, 25);
+  color: white;
 }
 
 </style>

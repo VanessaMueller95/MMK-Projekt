@@ -20,14 +20,15 @@
         <div class="col-sm-4" style="height:220px;"><Chart2Component></Chart2Component></div>
       </div>
       <div class="row top-buffer">
-        <div class="col-sm-8" style="height:220px;"><Chart3Component></Chart3Component></div>
-        <div class="col-sm-4" style="height:310px;"><Calender></Calender></div>
+        <div class="col-sm-4" style="height:220px;"><Chart3Component></Chart3Component></div>
+        <div class="col-sm-4" style="height:220px;"><Chart1Component></Chart1Component></div>
+        <div class="col-sm-4" style="height:220px;"><Calender></Calender></div>
       </div>
       <div class="row top-buffer">
         <div class="col-sm-12" style="height:220px;">
           <Chart5Component v-if="this.line"></Chart5Component>
           <Chart6Component v-if="!this.line"></Chart6Component>
-          <button @click="changeChart()">Change Chart</button>
+          <button @click="changeChart()">BAR/LINE</button>
         </div>
       </div>
       
@@ -42,7 +43,6 @@
   import Chart1Component from "@/Chart1.vue"
   import Chart2Component from "@/Chart2.vue"
   import Chart3Component from "@/Chart3.vue"
-  import Chart4Component from "@/Chart4.vue"
   import Chart5Component from "@/Chart5.vue"
   import Chart6Component from "@/Chart5-2.vue"
   
@@ -54,7 +54,6 @@
 		Chart1Component,
 		Chart2Component,
 		Chart3Component,
-		Chart4Component,
 		Chart5Component,
 		Chart6Component,
 		Calender
@@ -142,7 +141,10 @@
   }
 
   .ContainerContent{
-    padding: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   .top-buffer { margin-top:10px; }
@@ -150,5 +152,29 @@
   a img{
     margin-right: 15px;
   }
+
+  p{
+    font-size: 14px;
+  }
+
+  button{
+  position: absolute;
+  right: 65px;
+  top: 25px;
+  background-color:#F39B42;
+  border: none;
+  color: white;
+  padding: 5px 10px 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px !important;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+button:hover{
+  background-color:rgb(235, 130, 25);
+  color: white;
+}
 
 </style>

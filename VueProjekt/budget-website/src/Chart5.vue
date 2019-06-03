@@ -78,7 +78,7 @@
     computed: {
     myStyles () {
       return {
-        height: `130px`,
+        height: `140px`,
         position: 'relative'
       }
     }

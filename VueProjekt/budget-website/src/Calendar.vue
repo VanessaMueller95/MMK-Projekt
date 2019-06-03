@@ -1,5 +1,5 @@
 <template>
-  <article id="calendar"
+  <article id="calendar" style="font-size: 0.8rem; height:200px; margin-top: 10px;"
     :style="{}">
     <header>
       <div class="aktuelles-datum">
@@ -129,14 +129,14 @@
   @mixin calendar-layout($property) {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-    grid-gap: 10px;
-    padding: 5px;
+    grid-gap: 5px;
+    padding: 3px;
 
     div {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 30px;
+      height: 22px;
       color: #2E3754;
       border-radius: 5px;
     }
@@ -145,18 +145,15 @@
   @mixin arrow-style() {
     width: 0;
     height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
     cursor: pointer;
   }
 
   #calendar {
-    transform: scale(0.8,0.8);
-    width: 80%;
-    height: 120%;
+    width: 100%;
     background-color: #ffffff;
-    font-family: 'arial';
-    border-radius: 15px;
+    border-radius: 10px;
     overflow: hidden;
     background-size: 100px;
     user-select: none;
@@ -165,28 +162,28 @@
       display: flex;
       justify-content: center;
       align-items: top;
-      height: 60px;
-      padding: 20px 0 0;
+      height: 30px;
+      padding: 5px 0 0;
       text-align: center;
       overflow: hidden;
       color: #2E3754;
     
       .pfeil-hoch {
         @include arrow-style();
-        border-bottom: 7px solid #2E3754;
+        border-bottom: 5px solid #2E3754;
         border-left:1 0px solid #2E3754; 
         }
 
       .pfeil-runter {
         @include arrow-style();
-        border-top: 7px solid #2E3754;
+        border-top: 5px solid #2E3754;
       }
 
       .heute {
         display: grid;
-        grid-template-rows: 7px 1fr 20px;
-        grid-template-columns: 20px 160px 50px;
-        grid-gap:11px;
+        grid-template-rows: 8px 1fr 10px;
+        grid-template-columns: 10px 80px 50px;
+        grid-gap:5px;
 
         div {
           display: flex;
@@ -195,12 +192,12 @@
       }
 
        .heute {
-      font-size: 2rem;
+      font-size: 1rem;
       }
     }
 
     .wochentage {
-      @include calendar-layout(10px 20px 10px);
+      @include calendar-layout(10px 15px 10px);
       background-color: rgb(221, 217, 217);
       border-bottom: 1px solid #fff;
 
@@ -210,12 +207,12 @@
     }
 
     .date {
-      @include calendar-layout(10px 20px 20px);
+      @include calendar-layout(10px 15px 20px);
       background-color: #fff;
 
       .active {
-        background-color: #rgb(221, 217, 217);
-        color: #2A4C50;
+        background-color: #13B4B6;
+        color: white;
       }
 
       .day {
