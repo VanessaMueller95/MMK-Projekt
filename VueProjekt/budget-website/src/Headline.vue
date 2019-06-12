@@ -1,7 +1,7 @@
 <template>
     <div id="headlineContainer">
         <div class="ContainerContent">
-            <h1>FINANZ <br> ÜBERSICHT</h1>
+            <h1>{{ $t('mainHeadline') }}</h1>
         </div>
     </div>
 </template>

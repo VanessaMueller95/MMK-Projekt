@@ -1,7 +1,7 @@
 <template>
     <div id="chart3Container">
         <div class="ContainerContent">
-            <p>MONATSAUSGABEN IM JUNI</p>
+            <p>{{ $t('monSpending') }}</p>
             <pie-chart :chartdata="this.chartconfig" :styles="myStyles" :options="this.options" :labels="this.labels"></pie-chart>
             <div id="chart-legends"></div>
         </div>
@@ -34,7 +34,7 @@ import PieChart from "./PieChart.js";
                 responsive: true,
                 maintainAspectRatio: false,
                 },
-        labels: ['Miete', 'Auto', 'Strom', 'Nahrung', 'Kleidung', 'Verfügbar'],
+        labels: [this.$i18n.t('rent'), this.$i18n.t('car'), this.$i18n.t('electricity'), this.$i18n.t('food'), this.$i18n.t('clothes'), this.$i18n.t('available')],
         chartconfig: {
               label: 'Kategorien',
               backgroundColor: ["#71c5c7", "#0caeaa", "#176668", "#b1b1b1", "#6e7373", "#f29940"],

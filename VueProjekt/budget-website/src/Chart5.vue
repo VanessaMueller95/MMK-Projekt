@@ -1,7 +1,7 @@
 <template>
     <div id="chart5Container">
         <div class="ContainerContent">
-            <p>MONATLICHE AUSGABEN 2018</p>
+            <p>{{ $t('yearSpending') }}</p>
             <line-chart :chartdata="this.chartconfig" :styles="myStyles" :options="this.options" :labels="this.labels"></line-chart>
         </div>
     </div>
@@ -43,7 +43,7 @@
                 }]
             }
         },
-        labels: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+        labels: [this.$i18n.t('jan'), this.$i18n.t('feb'), this.$i18n.t('mar'), this.$i18n.t('apr'), this.$i18n.t('may'), this.$i18n.t('jun'), this.$i18n.t('jul'), this.$i18n.t('aug'), this.$i18n.t('sep'), this.$i18n.t('oct'), this.$i18n.t('nov'), this.$i18n.t('dec')],
         chartconfig: {
               label: 'Ausgaben',
               pointBackgroundColor: '#F29A42',
@@ -56,21 +56,7 @@
     mounted () {
     },
     methods: {
-      fillData () {
-        this.datacollection = {
-          labels: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-          datasets: [
-            {
-              label: 'Ausgaben',
-              borderColor: 'blue',
-              pointBackgroundColor: 'rgba(19, 180,182, 1)',
-              borderWidth: 1,
-              pointBorderColor: 'black',
-              data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(),]
-            }
-          ]
-        }
-      },
+      
       getRandomInt () {
         return Math.floor(Math.random() * (50 - 5 + 1)) + 5
       }

@@ -3,34 +3,34 @@
         <div class="ContainerContent">
             <div id="content1">
                 <div class="gesamtText">
-                    <p>GESAMTGUTHABEN</p>
-                    <p>IM  
+                    <p>{{ $t('budget') }}</p>
+                    <p>{{ $t('in') }}  
                         <select>
-                            <option value="januar">JANUAR</option>
-                            <option value="februar">FEBRUAR</option>
-                            <option value="märz">MÄRZ</option>
-                            <option value="april" selected >APRIL</option>
+                            <option value="januar">{{ $t('jan') }}</option>
+                            <option value="februar">{{ $t('feb') }}</option>
+                            <option value="märz">{{ $t('mar') }}</option>
+                            <option value="june" selected >{{ $t('jun') }}</option>
                         </select> 
                     </p>
                 </div>
                 <div class="gesamtMoney">
-                    <p>2.456,89€</p>
+                    <p>2.456,89{{ $t('currency') }}</p>
                 </div>
             </div>
             <div id="content2">
                 <div class="gesamtText">
-                    <p>RESTGUTHABEN</p>
-                    <p>IM  
+                    <p>{{ $t('rest') }}</p>
+                    <p>{{ $t('in') }}  
                         <select>
-                            <option value="januar">JANUAR</option>
-                            <option value="februar">FEBRUAR</option>
-                            <option value="märz">MÄRZ</option>
-                            <option value="april" selected >APRIL</option>
+                            <option value="januar">{{ $t('jan') }}</option>
+                            <option value="februar">{{ $t('feb') }}</option>
+                            <option value="märz">{{ $t('mar') }}</option>
+                            <option value="june" selected >{{ $t('jun') }}</option>
                         </select> 
                     </p>
                 </div>
                 <div class="gesamtMoney">
-                    <p>156,89€</p>
+                    <p>156,89{{ $t('currency') }}</p>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@
 }
 
 #content2{
-    background-color: #F39B42;
+    background-color:#f39b42;
     background-image: url('~@/assets/gesamtBudget-bg2.jpg');
     background-size: 100%;
 }
