@@ -12,16 +12,16 @@
         <li><a href="#"><img src="~@/assets/icon-einstellungen.png" height="20" width="20">{{ $t('settings') }}</a></li>
       </ul>
     </div>
-	<div id="app">	<Calendar />	</div>	
+	<div id="app">	</div>	
     <div id="content">
       <div class="row top-buffer">
         <div class="col-sm-4" style="height:220px;"><HeadlineComponent></HeadlineComponent></div>
-        <div class="col-sm-4" style="height:220px;"><Chart1Component></Chart1Component></div>
+        <div class="col-sm-4" style="height:220px;"><Chart1Component :key="this.$i18n.locale"></Chart1Component></div>
         <div class="col-sm-4" style="height:220px;"><Chart2Component></Chart2Component></div>
       </div>
       <div class="row top-buffer">
         <div class="col-sm-4" style="height:220px;"><Chart3Component :key="this.$i18n.locale"></Chart3Component></div>
-        <div class="col-sm-4" style="height:220px;"><Chart1Component></Chart1Component></div>
+        <div class="col-sm-4" style="height:220px;"><Chart7Component :key="this.$i18n.locale"></Chart7Component></div>
         <div class="col-sm-4" style="height:220px;"><Chart4Component></Chart4Component></div>
       </div>
       <div class="row top-buffer">
@@ -46,6 +46,7 @@
   import Chart4Component from "@/Chart4.vue"
   import Chart5Component from "@/Chart5.vue"
   import Chart6Component from "@/Chart5-2.vue"
+  import Chart7Component from "@/Chart6.vue"
   
 
   export default{
@@ -57,7 +58,8 @@
     Chart3Component,
     Chart4Component,
 		Chart5Component,
-		Chart6Component,
+    Chart6Component,
+    Chart7Component,
     },
     data(){
       return{
@@ -197,6 +199,7 @@
   --header-padding: 2px 10px 5px 10px;
   --arrows-padding: 1px 80px;
   --highlight-height: 1.5rem;
+  --orange: #fd7e14;
 }
 
 .in-next-month div, .in-prev-month div{

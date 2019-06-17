@@ -15,10 +15,17 @@ Vue.use(VCalendar, {componentPrefix: 'vc'});
     return {
         attrs: [
         {
-            key: 'today',
-            highlight: 'orange',
-            dates: new Date()
-        }
+          key: 'today',
+          highlight: {
+            backgroundColor: 'orange',
+            color: 'orange',
+          },
+          // Just use a normal style
+          contentStyle: {
+            color: "white",
+          },
+          dates: new Date(),
+        },
     ]
     }
   }

@@ -36,7 +36,10 @@ export const i18n = new VueI18n({
             electricity: "Electricity",
             food: "Food",
             clothes: "Clothes",
-            available: "Available"
+            available: "Available",
+            balance: "BALANCE OF THE LAST 5 MONTH",
+            left: "Left Budget",
+            leftDays: "Days in the month"
 
         },
         de: {
@@ -69,7 +72,10 @@ export const i18n = new VueI18n({
             electricity: "Strom",
             food: "Nahrung",
             clothes: "Kleidung",
-            available: "Verfügbar"
+            available: "Verfügbar",
+            balance: "BILANZ DER LETZTEN 5 MONATE",
+            left: "Restbudget",
+            leftDays: "Vergangene Tage im Monat"
         }
     }
 })
