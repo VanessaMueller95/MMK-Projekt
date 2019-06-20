@@ -28,7 +28,7 @@
                         display: true,
                         position: 'bottom',
                         labels: {
-                            generateLabels: function(chart) {
+                            generateLabels: function() {
                                 return [
                                     { 
                                         text: "Restbudget",

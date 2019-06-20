@@ -31,8 +31,12 @@
           <button class="barButton" @click="changeChart()">BAR/LINE</button>
         </div>
       </div>
-      <button @click="changeLang()">CHANGE LANGUAGE</button>
-      
+      <button @click="changeLang()">CHANGE LANGUAGE</button> 
+      <section>
+      <p v-for="(einnahme, idx) in einnahmen" :key="idx">
+        <span>Test + {{ einnahme.Datum }} + {{ einnahme.Wert }}</span>
+      </p>
+      </section>
     </div>
   </body>
 </html>
@@ -47,10 +51,11 @@
   import Chart5Component from "@/Chart5.vue"
   import Chart6Component from "@/Chart5-2.vue"
   import Chart7Component from "@/Chart6.vue"
-  
+
+  import db from "@/db.js"
 
   export default{
-    name: "Budget Website",
+    name: "BudgetWebsite",
     components:{ 
 		HeadlineComponent,
 		Chart1Component,
@@ -63,8 +68,14 @@
     },
     data(){
       return{
-        line: false
+        line: false,
+        einnahmen: []
       };
+    },
+    firestore (){
+      return {
+        einnahmen: db.collection('Einnahmen')
+      }
     },
     methods:{
       changeChart () {
