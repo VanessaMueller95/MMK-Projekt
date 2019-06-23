@@ -13,16 +13,6 @@
 
 <script>
     import db from "@/db.js"
-    /*import Vue from 'vue'
-    import { firestorePlugin } from 'vuefire'
-    Vue.use(firestorePlugin)
-    
-    import firebase from 'firebase'
-    firebase.initializeApp({
-        databaseURL: "https://budgetwebsite-d5b36.firebaseio.com",
-        projectId: "budgetwebsite-d5b36"
-    })
-    var db = firebase.firestore();*/
 
     export default{
         name:"headline",
@@ -35,7 +25,7 @@
             return {
                 test: db.collection('Einnahmen')
             }
-        },
+        }
     };
 </script>
 

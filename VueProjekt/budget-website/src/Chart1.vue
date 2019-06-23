@@ -1,7 +1,7 @@
 <template>
     <div id="chart1Container">
         <div class="ContainerContent">
-            <Dounut :chartdata="this.chartconfig" :styles="myStyles" :options="this.options" :labels="this.labels"></Dounut>
+            <Dounut :chart-data="this.datacollection" :styles="myStyles" :options="this.options"></Dounut>
         </div>
     </div>
 </template>
@@ -9,6 +9,7 @@
 <script>
 
     import Dounut from "./DonutChart.js";
+    import db from "@/db.js"
 
     export default{
         components: {
@@ -16,6 +17,16 @@
         },
         data () {
             return {
+                ausgaben: [],
+                ausgabenMonth: [],
+                gesAusgabenMonth: 0.0,
+                monthBudgetRef: [],
+                monthBudget: 0,
+                leftDays: 0.0,
+                pastDays: 0.0,
+                currentMonth : new Date(new Date().getFullYear(),new Date().getMonth(), 1),
+                nextMonth : new Date(new Date().getFullYear(),new Date().getMonth()+1, 1),
+                test: 5,
                 test: this.$i18n.t('rent'),
                 datacollection: null,
                 gradient:null,
@@ -47,45 +58,85 @@
                     tooltips: {
                         callbacks: {
                             label: function(tooltipItem, data) {
-                                var dataset = data.datasets[tooltipItem.datasetIndex];
-                                var index = tooltipItem.index;
-                                return dataset.labels[index] + ': ' + dataset.data[index];
+                                if (tooltipItem.datasetIndex === 0) {
+                                    return data['datasets'][0]['data'][tooltipItem['index']] + "€";
+                                } else if (tooltipItem.datasetIndex === 1) {
+                                     return data['datasets'][1]['data'][tooltipItem['index']] + "Tage";
+                                }
                             }
                         }
                     },
-                    
                     responsive: true,
                     maintainAspectRatio: false,
-                },
-        labels: [this.$i18n.t('rent'), this.$i18n.t('car')],
-        chartconfig: [{
-            labels: ["1","2"],
-            data: [20, 80],
-            backgroundColor: ["#13B4B6", "#ECECEC"]
-            },
-            {data: [30, 70],
-            backgroundColor: ["#ECECEC", "#f39b42"],
-            labels: ["3","2"]
-        }],
-        
-      }
-    },
-    mounted () {
+                }
+      };
     },
     methods: {
       getRandomInt () {
         return Math.floor(Math.random() * (50 - 5 + 1)) + 5
+      },
+      calculateDaysInMonth(){
+        var date = new Date();
+        var day = date.getDate();
+        var month = date.getMonth()+1;
+        var year = date.getYear();
+        this.pastDays = Number(day);
+        this.leftDays = this.daysInMonth(month, year)-day;
+      },
+      daysInMonth (month, year) {
+        return new Date(year, month, 0).getDate();
+      },
+      calculateSpendings(){
+                var i;
+                for (i = 0; i < this.ausgabenMonth.length; i++) {
+                    this.gesAusgabenMonth = Math.round(this.gesAusgabenMonth + this.ausgabenMonth[i].wert);
+                } 
+                this.monthBudget = Math.round(this.monthBudget - this.gesAusgabenMonth);
+      },
+      fillData(){
+          this.datacollection = {
+              labels: ["Tage", "€"], 
+              datasets: [
+                  {
+                        label: ["1"],
+                        data: [this.gesAusgabenMonth, this.monthBudget],
+                        backgroundColor: ["#13B4B6", "#ECECEC"]
+                    },
+                    {
+                        label: ["2"],
+                        data: [this.leftDays, this.pastDays],
+                        backgroundColor: ["#ECECEC", "#f39b42"]
+                }],
+          }
       }
     },
     computed: {
-    myStyles () {
-      return {
-        height: '185px',
-        width: '320px',
-        padding: '0px'
-      }
+        myStyles () {
+            return {
+                height: '185px',
+                width: '320px',
+                padding: '0px'
+            }
+        },
+    },
+    mounted() {
+        this.calculateDaysInMonth(),
+        this.calculateSpendings(),
+        this.$bind('ausgabenMonth', db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth))
+                .then((doc) => {
+                })
+                .catch((error) => {
+                    console.log('error in loading: ', error)
+                })
+        this.$bind("monthBudgetRef", db.collection('budget').doc('monatsbudget'))
+                .then((doc) => {
+                    this.monthBudget= doc.wert; 
+                    this.calculateSpendings(),
+                    this.fillData()
+                }).catch(err => {
+                    console.error(err)
+                })
     }
-  }
   }
 </script>
 

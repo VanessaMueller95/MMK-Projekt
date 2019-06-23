@@ -34,7 +34,7 @@
       <button @click="changeLang()">CHANGE LANGUAGE</button> 
       <section>
       <p v-for="(einnahme, idx) in einnahmen" :key="idx">
-        <span>Test + {{ einnahme.Datum }} + {{ einnahme.Wert }}</span>
+        <span>Test + {{ einnahme.datum }} + {{ einnahme.wert }}</span>
       </p>
       </section>
     </div>
@@ -74,7 +74,7 @@
     },
     firestore (){
       return {
-        einnahmen: db.collection('Einnahmen')
+        einnahmen: db.collection('einnahmen')
       }
     },
     methods:{
