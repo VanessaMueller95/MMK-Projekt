@@ -32,11 +32,6 @@
         </div>
       </div>
       <button @click="changeLang()">CHANGE LANGUAGE</button> 
-      <section>
-      <p v-for="(einnahm, idx) in einnahmen" :key="idx">
-        <span>Test + {{ einnahme.datum }} + {{ einnahme.wert }}</span>
-      </p>
-      </section>
     </div>
   </body>
 </html>

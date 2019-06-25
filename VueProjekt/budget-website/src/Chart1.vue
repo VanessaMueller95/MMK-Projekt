@@ -89,9 +89,8 @@
       calculateSpendings(){
                 var i;
                 for (i = 0; i < this.ausgabenMonth.length; i++) {
-                    this.gesAusgabenMonth = Math.round(this.gesAusgabenMonth + this.ausgabenMonth[i].wert);
+                    this.gesAusgabenMonth = this.gesAusgabenMonth + this.ausgabenMonth[i].wert;
                 } 
-                this.monthBudget = Math.round(this.monthBudget - this.gesAusgabenMonth);
       },
       fillData(){
           this.datacollection = {
@@ -99,7 +98,7 @@
               datasets: [
                   {
                         label: ["1"],
-                        data: [this.gesAusgabenMonth, this.monthBudget],
+                        data: [this.monthBudget, this.gesAusgabenMonth],
                         backgroundColor: ["#13B4B6", "#ECECEC"]
                     },
                     {
@@ -121,21 +120,24 @@
     },
     mounted() {
         this.calculateDaysInMonth(),
-        this.calculateSpendings(),
         this.$bind('ausgabenMonth', db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth))
                 .then((doc) => {
-                })
+                    this.calculateSpendings()
+                    this.$bind("monthBudgetRef", db.collection('budget').doc('monatsbudget'))
+                        .then((doc) => {
+                            this.monthBudget= doc.wert; 
+                        })
+                        .then((doc) => {
+                            this.monthBudget = Math.round(this.monthBudget - this.gesAusgabenMonth);
+                            this.fillData()
+                        }).catch(err => {
+                            console.error(err)
+                        })
+                    })
                 .catch((error) => {
                     console.log('error in loading: ', error)
                 })
-        this.$bind("monthBudgetRef", db.collection('budget').doc('monatsbudget'))
-                .then((doc) => {
-                    this.monthBudget= doc.wert; 
-                    this.calculateSpendings(),
-                    this.fillData()
-                }).catch(err => {
-                    console.error(err)
-                })
+       
     }
   }
 </script>
