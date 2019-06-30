@@ -19,6 +19,7 @@ import db from "@/db.js"
         },
         data () {
             return {
+              test:0,
                 refRent: [], refCar: [], refElectricity: [], refFood: [], refClothes: [], refOthers: [],
                 datacollection: null,
                 gradient:null,

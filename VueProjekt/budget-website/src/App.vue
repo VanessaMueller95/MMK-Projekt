@@ -6,14 +6,13 @@
   <body>
     <div id="nav">
       <ul class="navlist">
-        <li class="active"><a href="#"><img src="~@/assets/icon-uebersicht.png" height="20" width="20">{{ $t('overview') }}</a></li>
-        <li><a href="#"><img src="~@/assets/icon-einnahmen.png" height="20" width="20">{{ $t('income') }}</a></li>
-        <li><a href="#"><img src="~@/assets/icon-ausgaben.png" height="20" width="20">{{ $t('spendings') }}</a></li>
-        <li><a href="#"><img src="~@/assets/icon-einstellungen.png" height="20" width="20">{{ $t('settings') }}</a></li>
+        <li :class="{'active': state === 1}"><a href="#" @click="state = 1"><img src="~@/assets/icon-uebersicht.png" height="20" width="20">{{ $t('overview') }}</a></li>
+        <li :class="{'active': state === 2}"><a href="#" @click="state = 2"><img src="~@/assets/icon-einnahmen.png" height="20" width="20">{{ $t('income') }}</a></li>
+        <li :class="{'active': state === 3}"><a href="#" @click="state = 3"><img src="~@/assets/icon-ausgaben.png" height="20" width="20">{{ $t('spendings') }}</a></li>
       </ul>
+      <button id="langButton" @click="changeLang()">DE / EN</button> 
     </div>
-	<div id="app">	</div>	
-    <div id="content">
+    <div id="content" v-if="this.state===1">
       <div class="row top-buffer">
         <div class="col-sm-4" style="height:220px;"><HeadlineComponent></HeadlineComponent></div>
         <div class="col-sm-4" style="height:220px;"><Chart1Component :key="this.$i18n.locale"></Chart1Component></div>
@@ -31,7 +30,12 @@
           <button class="barButton" @click="changeChart()">BAR/LINE</button>
         </div>
       </div>
-      <button @click="changeLang()">CHANGE LANGUAGE</button> 
+    </div>
+    <div id="incomeApp">
+      <IncomeForm v-if="this.state===2"></IncomeForm>
+    </div>
+    <div id="spendingsApp">
+      <SpendingsForm v-if="this.state===3"></SpendingsForm>
     </div>
   </body>
 </html>
@@ -46,6 +50,8 @@
   import Chart5Component from "@/Chart5.vue"
   import Chart6Component from "@/Chart5-2.vue"
   import Chart7Component from "@/Chart6.vue"
+  import IncomeForm from "@/income.vue"
+  import SpendingsForm from "@/spendings.vue"
 
   import db from "@/db.js"
 
@@ -60,11 +66,17 @@
 		Chart5Component,
     Chart6Component,
     Chart7Component,
+    IncomeForm,
+    SpendingsForm
     },
     data(){
       return{
         line: false,
-        einnahmen: []
+        einnahmen: [],
+        state: 1,
+        overviewActive: true,
+        incomeActive: false,
+        spendingActive: false
       };
     },
     firestore (){
@@ -86,6 +98,10 @@
         }else{
           this.$i18n.locale = 'de'
         }
+      },
+      changeState(newState){
+        this.state=newState;
+        console.log(this.state);
       }
     }
   };
@@ -121,7 +137,7 @@
     font-weight:200;
   }
 
-  #content{
+  #content, #incomeApp, #spendingsApp{
     margin: 20px;
     margin-left: 270px;
   }
@@ -186,6 +202,23 @@
   font-size: 12px !important;
   margin: 4px 2px;
   cursor: pointer;
+}
+
+#langButton{
+  position: absolute;
+  bottom: 30px;
+  left: 35px;
+  background-color:transparent;
+  border-color: white;
+  border-width: 1px;
+  color: white;
+  padding: 5px 0px 5px 0px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px !important;
+  margin: 4px 2px;
+  cursor: pointer;
+  width: 170px;
 }
 
 .barButton:hover{
