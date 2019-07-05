@@ -2,7 +2,7 @@
     <div id="chart5Container">
         <div class="ContainerContent">
             <p>{{ $t('yearSpending') }} {{yearVar}}</p>
-            <bar-chart :chart-data="this.datacollection" :styles="myStyles" :options="this.options" ></bar-chart>
+            <bar-chart :chartData="this.datacollection" :styles="myStyles" :options="this.options" ></bar-chart>
         </div>
     </div>
 </template>
@@ -18,19 +18,16 @@
     },
     data () {
       return {
-        datacollection: null,
-        gradient:null,
-        yearVar: new Date().getFullYear(),
-        monthRefs: [],
+        datacollection: {},
         monthData: [],
-        currentMonth : new Date(new Date().getFullYear(),new Date().getMonth(), 1),
+        yearVar: new Date().getFullYear(),
         options: {
             fontFamily: 'Muli',
+            responsive: true,
+            maintainAspectRatio: false,
             legend: {
                 display: false
             },
-            responsive: true,
-            maintainAspectRatio: false,
             scales: {
                 yAxes: [{
                     ticks: {
@@ -55,17 +52,13 @@
       this.fillData ()
     },
     methods: {
-      getRandomInt () {
-        return Math.floor(Math.random() * (50 - 5 + 1)) + 5
-      },
       fillData(){
             this.datacollection = {
-              labels: [this.$i18n.t('jan'), this.$i18n.t('feb'), this.$i18n.t('mar'), this.$i18n.t('apr'), this.$i18n.t('may'), this.$i18n.t('jun'), this.$i18n.t('jul'), this.$i18n.t('aug'), this.$i18n.t('sep'), this.$i18n.t('oct'), this.$i18n.t('nov'), this.$i18n.t('dec')],
+              labels: [this.$i18n.t('months[0]'), this.$i18n.t('months[1]'), this.$i18n.t('months[2]'), this.$i18n.t('months[3]'), this.$i18n.t('months[4]'), this.$i18n.t('months[5]'), this.$i18n.t('months[6]'), this.$i18n.t('months[7]'), this.$i18n.t('months[8]'), this.$i18n.t('months[9]'), this.$i18n.t('months[10]'), this.$i18n.t('months[11]')],
               datasets: [{
-                label: "Ausgaben",
+                label: this.$i18n.t('spendingsSM'),
                 data: this.monthData,
                 backgroundColor:'#F29A42'
-               
               }]
             }
       }
@@ -78,11 +71,7 @@
         }
       }
   },
-  mounted () {
-    },
-
   created(){
-      var i = 5;
       var docRefJan = db.collection('ausgaben').where("datum", ">", new Date(new Date().getFullYear(),0, 1)).where("datum", "<", new Date(new Date().getFullYear(),1, 1));
       var docRefFeb = db.collection('ausgaben').where("datum", ">", new Date(new Date().getFullYear(),1, 1)).where("datum", "<", new Date(new Date().getFullYear(),2, 1));
       var docRefMar = db.collection('ausgaben').where("datum", ">", new Date(new Date().getFullYear(),2, 1)).where("datum", "<", new Date(new Date().getFullYear(),3, 1));
@@ -101,73 +90,73 @@
       docRefJan.get().then(function(querySnapshot) {
         var spendings = 0;
         querySnapshot.forEach(function(doc) {spendings = spendings + doc.get("wert");});
-        vm.monthData[0] = spendings;
+        vm.monthData[0] = (spendings).toFixed(2);
       });
 
       docRefFeb.get().then(function(querySnapshot) {
         var spendings = 0;
         querySnapshot.forEach(function(doc) {spendings = spendings + doc.get("wert");});
-        vm.monthData[1] = spendings;
+        vm.monthData[1] = (spendings).toFixed(2);
       });
 
       docRefMar.get().then(function(querySnapshot) {
         var spendings = 0;
         querySnapshot.forEach(function(doc) {spendings = spendings + doc.get("wert");});
-        vm.monthData[2] = spendings;
+        vm.monthData[2] = (spendings).toFixed(2);
       });
 
       docRefApr.get().then(function(querySnapshot) {
         var spendings = 0;
         querySnapshot.forEach(function(doc) {spendings = spendings + doc.get("wert");});
-        vm.monthData[3] = spendings;
+        vm.monthData[3] = (spendings).toFixed(2);
       });
 
       docRefMay.get().then(function(querySnapshot) {
         var spendings = 0;
         querySnapshot.forEach(function(doc) {spendings = spendings + doc.get("wert");});
-        vm.monthData[4] = spendings;
+        vm.monthData[4] = (spendings).toFixed(2);
       });
 
       docRefJun.get().then(function(querySnapshot) {
         var spendings = 0;
         querySnapshot.forEach(function(doc) {spendings = spendings + doc.get("wert");});
-        vm.monthData[5] = spendings;
+        vm.monthData[5] = (spendings).toFixed(2);
       });
 
       docRefJul.get().then(function(querySnapshot) {
         var spendings = 0;
         querySnapshot.forEach(function(doc) {spendings = spendings + doc.get("wert");});
-        vm.monthData[6] = spendings;
+        vm.monthData[6] = (spendings).toFixed(2);
       });
 
       docRefAug.get().then(function(querySnapshot) {
         var spendings = 0;
         querySnapshot.forEach(function(doc) {spendings = spendings + doc.get("wert");});
-        vm.monthData[7] = spendings;
+        vm.monthData[7] = (spendings).toFixed(2);
       });
 
       docRefSep.get().then(function(querySnapshot) {
         var spendings = 0;
         querySnapshot.forEach(function(doc) {spendings = spendings + doc.get("wert");});
-        vm.monthData[8] = spendings;
+        vm.monthData[8] = (spendings).toFixed(2);
       });
 
       docRefOct.get().then(function(querySnapshot) {
         var spendings = 0;
         querySnapshot.forEach(function(doc) {spendings = spendings + doc.get("wert");});
-        vm.monthData[9] = spendings;
+        vm.monthData[9] = (spendings).toFixed(2);
       });
 
       docRefNov.get().then(function(querySnapshot) {
         var spendings = 0;
         querySnapshot.forEach(function(doc) {spendings = spendings + doc.get("wert");});
-        vm.monthData[10] = spendings;
+        vm.monthData[10] = (spendings).toFixed(2);
       });
 
       docRefDec.get().then(function(querySnapshot) {
         var spendings = 0;
         querySnapshot.forEach(function(doc) {spendings = spendings + doc.get("wert");});
-        vm.monthData[11] = spendings;
+        vm.monthData[11] = (spendings).toFixed(2);
         vm.fillData();
       });
   }
@@ -177,18 +166,8 @@
 
 <style scoped>
 
-#chart5Container{
-    border-radius: 10px;
-    width: 87%;
-    height: 200px;
-    margin-top: 10px;
-    width: 100%;
-    background-color: white;
-}
+  #chart5Container{border-radius: 10px; width: 87%; height: 200px; margin-top: 10px; width: 100%; background-color: white;}
 
-.ContainerContent{
-    height: 200px;
-}
-
+  .ContainerContent{height: 200px;}
 
 </style>

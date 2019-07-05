@@ -53,36 +53,28 @@
   import IncomeForm from "@/income.vue"
   import SpendingsForm from "@/spendings.vue"
 
-  import db from "@/db.js"
-
   export default{
     name: "BudgetWebsite",
     components:{ 
-		HeadlineComponent,
-		Chart1Component,
-		Chart2Component,
-    Chart3Component,
-    Chart4Component,
-		Chart5Component,
-    Chart6Component,
-    Chart7Component,
-    IncomeForm,
-    SpendingsForm
+      HeadlineComponent,
+      Chart1Component,
+      Chart2Component,
+      Chart3Component,
+      Chart4Component,
+      Chart5Component,
+      Chart6Component,
+      Chart7Component,
+      IncomeForm,
+      SpendingsForm
     },
     data(){
       return{
         line: false,
-        einnahmen: [],
         state: 1,
         overviewActive: true,
         incomeActive: false,
         spendingActive: false
       };
-    },
-    firestore (){
-      return {
-        einnahmen: db.collection('einnahmen')
-      }
     },
     methods:{
       changeChart () {
@@ -91,7 +83,7 @@
         }else{
           this.line=true;
         }
-    },
+      },
       changeLang () {
         if (this.$i18n.locale == 'de'){
           this.$i18n.locale = 'en'
@@ -101,7 +93,6 @@
       },
       changeState(newState){
         this.state=newState;
-        console.log(this.state);
       }
     }
   };
@@ -110,159 +101,50 @@
 
 <style>
 
-  @font-face {
-    font-family: "ClearSans";
-    src: url("assets/ClearSans-Thin.ttf") format("ttf");
-  }
+  * {margin: 0; padding:0;}
 
-  * {
-  margin: 0;
-  padding:0;
-  }
+  body{background-color: #EFEFEF !important; font-family: 'Muli', sans-serif !important; font-weight:200; height: 100%; min-width: 1200px;}
 
-  html, body{
-    width: 100%;
-    height: 100%;
-  }
+  h1{font-family: 'Muli', sans-serif; font-weight:200;}
 
-  body{
-    background-color: #EFEFEF !important;
-    font-family: 'Muli', sans-serif !important;
-    font-weight:200;
-    height: 100%;
-  }
+  #content, #incomeApp, #spendingsApp{margin: 20px; margin-left: 270px;}
 
-  h1{
-    font-family: 'Muli', sans-serif;
-    font-weight:200;
-  }
+  #nav{position: fixed; z-index: 1; top: 0; left: 0; overflow-x: hidden; width: 250px; height: 100%; background-color: #2E3754; padding-top: 100px; color: white; font-weight:300;}
+  
+  #nav a{color: white; text-decoration: none;}
 
-  #content, #incomeApp, #spendingsApp{
-    margin: 20px;
-    margin-left: 270px;
-  }
+  #nav li{padding: 12px 0px 12px 35px; margin-bottom: 15px; list-style-type: none;}
 
-  #nav{
-    position: fixed; 
-    z-index: 1; 
-    top: 0; 
-    left: 0;
-    overflow-x: hidden; 
-    width: 250px;
-    height: 100%;
-    background-color: #2E3754;
-    padding-top: 100px;
-    color: white;
-    font-weight:300;
-  }
-  #nav a{
-    color: white;
-    text-decoration: none;
-  }
+  #nav .active{background-color: #F29940;}
 
-  #nav li{
-    padding-left: 35px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    margin-bottom: 15px;
-    list-style-type: none;
-  }
-
-  #nav .active{
-    background-color: #F29940;
-  }
-
-  .ContainerContent{
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 15px;
-    padding-right: 15px;
-  }
+  .ContainerContent{padding: 10px 15px 10px 15px;}
 
   .top-buffer { margin-top:10px; }
 
-  a img{
-    margin-right: 15px;
-  }
+  a img{margin-right: 15px;}
 
-  p{
-    font-size: 14px;
-  }
+  p{font-size: 14px;}
 
- .barButton{
-  position: absolute;
-  right: 65px;
-  top: 25px;
-  background-color:#F39B42;
-  border: none;
-  color: white;
-  padding: 5px 10px 5px 10px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 12px !important;
-  margin: 4px 2px;
-  cursor: pointer;
-}
+ .barButton{position: absolute; right: 65px; top: 25px; background-color:#F39B42; border: none; color: white; padding: 5px 10px 5px 10px; text-align: center; text-decoration: none; font-size: 12px !important; margin: 4px 2px; cursor: pointer;}
 
-#langButton{
-  position: absolute;
-  bottom: 30px;
-  left: 35px;
-  background-color:transparent;
-  border-color: white;
-  border-width: 1px;
-  color: white;
-  padding: 5px 0px 5px 0px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 13px !important;
-  margin: 4px 2px;
-  cursor: pointer;
-  width: 170px;
-}
+  #langButton{position: absolute; bottom: 30px; left: 35px; background-color:transparent; border-color: white; border-width: 1px; color: white; padding: 5px 0px 5px 0px; text-align: center; text-decoration: none; font-size: 13px !important; margin: 4px 2px; cursor: pointer; width: 170px;}
 
-.barButton:hover{
-  background-color:rgb(235, 130, 25);
-  color: white;
-}
+  .barButton:hover{background-color:rgb(235, 130, 25); color: white;}
 
-.vc-day-content{
-    font-size: 0.7rem !important;
-}
+  .vc-day-content{font-size: 0.7rem !important;}
 
-.vc-container {
-  --weekday-padding: 0px;
-  --weeks-padding: 0px;
-  --day-content-margin: 0rem auto;
-  --day-content-height: 1.5rem;
-  --header-padding: 2px 10px 5px 10px;
-  --arrows-padding: 1px 80px;
-  --highlight-height: 1.5rem;
-  --orange: #fd7e14;
-}
+  .vc-container {--weekday-padding: 0px; --weeks-padding: 0px; --day-content-margin: 0rem auto; --day-content-height: 1.5rem; --header-padding: 2px 10px 5px 10px; --arrows-padding: 1px 80px; --highlight-height: 1.5rem; --orange: #fd7e14;}
 
-.in-next-month div, .in-prev-month div{
-  opacity: 0.5 !important;
-}
+  .in-next-month div, .in-prev-month div{opacity: 0.5 !important;}
 
-.vc-text-sm{
-  font-size: 0.8rem;
-}
+  .vc-text-sm{font-size: 0.8rem;}
 
-.vc-text-lg{
-  font-size: 1rem;
-}
+  .vc-text-lg{font-size: 1rem;}
 
-.vc-border{
-  border-width: 0px;
-}
+  .vc-border{border-width: 0px;}
 
-.vc-weekday{
-  color: #13B4B6;
-}
+  .vc-weekday{color: #13B4B6;}
 
-.vc-title{
-  color: #f39b42;
-}
+  .vc-title{color: #f39b42;}
 
 </style>

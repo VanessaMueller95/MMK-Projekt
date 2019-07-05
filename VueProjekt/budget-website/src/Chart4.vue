@@ -6,43 +6,28 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import VCalendar from 'v-calendar';
-Vue.use(VCalendar, {componentPrefix: 'vc'});
+  import Vue from 'vue';
+  import VCalendar from 'v-calendar';
 
-    export default {
+  Vue.use(VCalendar, {componentPrefix: 'vc'});
+
+  export default {
     data() {
-    return {
-        attrs: [
-        {
+      return {
+        attrs: [{
           key: 'today',
-          highlight: {
-            backgroundColor: 'orange',
-            color: 'orange',
-          },
-          // Just use a normal style
-          contentStyle: {
-            color: "white",
-          },
+          highlight: {backgroundColor: 'orange', color: 'orange'},
+          contentStyle: {color: "white"},
           dates: new Date(),
-        },
-    ]
+        }]
+      }
     }
   }
-}
 
 </script>
 
 <style scoped>
 
-#chart4Container{
-    border-radius: 10px;
-    height: 200px;
-    margin-top: 10px;
-    width: 100%;
-    background-color: white;
-}
-
-
+  #chart4Container{border-radius: 10px; height: 200px; margin-top: 10px; width: 100%; background-color: white;}
 
 </style>

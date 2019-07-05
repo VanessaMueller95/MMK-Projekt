@@ -65,14 +65,10 @@
         methods:{
             addSpending(wert, newDate, kategorie){
                 var timestamp = firebase.firestore.Timestamp.fromDate(new Date(newDate));
-                db.collection('ausgaben').add({datum: timestamp, wert: wert, kategorie: kategorie})
-                .then(function(docRef) {
-                    console.log("Document written with ID: ", docRef.id);
-                })
-                .catch(function(error) {
-                    console.error("Error adding document: ", error);
-                });
-
+                db.collection('ausgaben').add({datum: timestamp, wert: wert, kategorie: kategorie});
+                this.newDate = null,
+                this.wert = null,
+                this.kategorie = null
             },
             deleteIncome(id){
                 db.collection('ausgaben').doc(id).delete();
@@ -90,114 +86,42 @@
                 return moment(String(date)).format('DD/MM/YYYY')
             }
         }
-        
-  }
-        
-    };
-
-    
+    }
+};
     
 </script>
 
 <style scoped>
-#incomeForm{
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 15px;
-    padding-right: 15px;
-    width: 100%;
-}
+    #incomeForm{padding-top: 10px; padding-bottom: 10px; padding-left: 15px; padding-right: 15px; width: 100%;}
 
-h1{
-    font-size: 3vw;
-    margin-bottom: 50px;
-    color: #2E3754;
-}
-h2{
-    font-size: 1.5vw;
-    margin-top: 30px;
-}
-table{
-    width: 55%;
-    text-align: center;
-}
+    h1{font-size: 3vw; margin-bottom: 50px; color: #2E3754;}
 
-tr{
-    width: 80%;
-}
-tr:nth-child(even) {
-    background: white;
-    }
+    h2{font-size: 1.5vw; margin-top: 30px;}
 
-td {
-    width: 30%;
-    padding: 3px;
-    border-bottom-color: white;
-    border-bottom-width: 3px;
-}
+    table{width: 55%; text-align: center;}
 
-input, select{
-    height: 40px;
-    width: 65%;
-    padding: 5px;
-    min-width: 300px;
-}
+    tr{width: 80%;}
 
-.label{
-    width: 35%;
-    padding-top: 8px;
-    min-width: 200px;
-}
+    tr:nth-child(even) {background: white;}
 
-.row{
-    margin-right: 50px;
-    width: 100%;
-    padding-left: 20px;
-    padding-bottom: 40px;
-    width: 55%;
-}
-.containerInput{
-    margin-top: 50px;
-    margin: auto;
-}
+    td {width: 30%; padding: 3px; border-bottom-color: white; border-bottom-width: 3px; font-size: 14px}
 
-#submitButton{
-    background-color: #13B4B6; 
-    border: none;
-    color: white;
-    padding: 10px 32px;
-    width: 55%;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    margin-left: 5px;
-    margin-bottom: 30px;
-    
-}
+    input, select{height: 40px; width: 65%; padding: 5px; min-width: 300px;}
 
-#tabelleEinnahmen{
-    margin-top: 20px;
-    margin-left: 5px;
-}
+    .label{width: 35%; padding-top: 8px; min-width: 200px;}
 
-#headlines{
-    background-color: #13B4B6;
-    color: white;
-}
+    .row{margin-right: 50px; width: 100%; padding-left: 20px; padding-bottom: 40px; width: 55%;}
 
-th{
-    padding: 8px;
-    font-weight: normal;
-}
+    .containerInput{margin-top: 50px; margin: auto;}
 
-.deleteButton{
-    background-color: #f39b42; 
-    border: none;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    font-size: 11px;
-    padding: 3px;
-}
+    #submitButton{background-color: #13B4B6; border: none; color: white; padding: 10px 32px; width: 55%; text-align: center; text-decoration: none; font-size: 16px; margin-left: 5px; margin-bottom: 30px;}
+
+    #tabelleEinnahmen{margin-top: 20px; margin-left: 5px;}
+
+    #headlines{background-color: #13B4B6; color: white;}
+
+    th{padding: 8px; font-weight: normal;}
+
+    .deleteButton{background-color: #f39b42; border: none; color: white; text-align: center; text-decoration: none; font-size: 11px; padding: 3px;}
 
 </style>
