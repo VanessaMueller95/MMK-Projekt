@@ -19,7 +19,6 @@
     data () {
       return {
         datacollection: {},
-        monthBudgetRef: [], thisMonthRef: [], oneMonthAgoRef:[], twoMonthAgoRef:[], threeMonthAgoRef:[], fourMonthAgoRef:[],
         monthlyBudget: 0, thisMonthBalance: 0, oneMonthAgoBalance:0, twoMonthAgoBalance:0, threeMonthAgoBalance:0, fourMonthAgoBalance:0,
         months: [this.$i18n.t('months[0]'),this.$i18n.t('months[1]'),this.$i18n.t('months[2]'),this.$i18n.t('months[3]'),this.$i18n.t('months[4]'),this.$i18n.t('months[5]'),this.$i18n.t('months[6]'),this.$i18n.t('months[7]'),this.$i18n.t('months[8]'),this.$i18n.t('months[9]'),this.$i18n.t('months[10]'),this.$i18n.t('months[11]')],
         fourthLastMonth: new Date(new Date().getFullYear(),new Date().getMonth()-5, 1),
@@ -28,7 +27,6 @@
         lastMonth: new Date(new Date().getFullYear(),new Date().getMonth()-1, 1),
         currentMonth : new Date(new Date().getFullYear(),new Date().getMonth(), 1),
         nextMonth : new Date(new Date().getFullYear(),new Date().getMonth()+1, 1),
-        colors:[],
         options: {
             fontFamily: 'Muli',
             responsive: true,
@@ -89,48 +87,48 @@
         }
       }
     },
-    mounted () {
-      this.$bind("monthBudgetRef", db.collection('budget').doc('monatsbudget'))
-                .then((doc) => {
-                    this.monthlyBudget= doc.wert;
+    created(){
+        var MonthBudgetRef = db.collection('budget').doc('monatsbudget');
+        var thisMonthRef = db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth)
+        var oneMonthAgoRef = db.collection('ausgaben').where("datum", ">", this.lastMonth).where("datum", "<", this.currentMonth)
+        var twoMonthAgoRef = db.collection('ausgaben').where("datum", ">", this.secondLastMonth).where("datum", "<", this.lastMonth)
+        var threeMonthAgoRef = db.collection('ausgaben').where("datum", ">", this.thirdLastMonth).where("datum", "<", this.secondLastMonth)
+        var fourMonthAgoRef = db.collection('ausgaben').where("datum", ">", this.fourthLastMonth).where("datum", "<", this.thirdLastMonth)
 
-                    this.$bind('thisMonthRef', db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth))
-                    .then(() => {
-                      var i;
-                      for (i = 0; i < this.thisMonthRef.length; i++) {this.thisMonthBalance += this.thisMonthRef[i].wert; }
-                      this.thisMonthBalance = this.monthlyBudget - this.thisMonthBalance
-                    })
+        var vm = this;
 
-                    this.$bind('oneMonthAgoRef', db.collection('ausgaben').where("datum", ">", this.lastMonth).where("datum", "<", this.currentMonth))
-                    .then(() => {
-                      var i;
-                      for (i = 0; i < this.oneMonthAgoRef.length; i++) {this.oneMonthAgoBalance += this.oneMonthAgoRef[i].wert; }
-                      this.oneMonthAgoBalance = this.monthlyBudget - this.oneMonthAgoBalance
-                    })
+        MonthBudgetRef.get().then(function(doc) {
 
-                    this.$bind('twoMonthAgoRef', db.collection('ausgaben').where("datum", ">", this.secondLastMonth).where("datum", "<", this.lastMonth))
-                    .then(() => {
-                      var i;
-                      for (i = 0; i < this.twoMonthAgoRef.length; i++) {this.twoMonthAgoBalance += this.twoMonthAgoRef[i].wert; }
-                      this.twoMonthAgoBalance = this.monthlyBudget - this.twoMonthAgoBalance
-                    })
+            vm.monthlyBudget = doc.data().wert;
 
-                    this.$bind('threeMonthAgoRef', db.collection('ausgaben').where("datum", ">", this.thirdLastMonth).where("datum", "<", this.secondLastMonth))
-                    .then(() => {
-                      var i;
-                      for (i = 0; i < this.threeMonthAgoRef.length; i++) {this.threeMonthAgoBalance += this.threeMonthAgoRef[i].wert; }
-                      this.threeMonthAgoBalance = this.monthlyBudget - this.threeMonthAgoBalance
-                    })
+            thisMonthRef.get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {vm.thisMonthBalance += doc.get("wert");});
+                vm.thisMonthBalance = vm.monthlyBudget - vm.thisMonthBalance;
+            });
 
-                    this.$bind('fourMonthAgoRef', db.collection('ausgaben').where("datum", ">", this.fourthLastMonth).where("datum", "<", this.thirdLastMonth))
-                    .then(() => {
-                      var i;
-                      for (i = 0; i < this.fourMonthAgoRef.length; i++) {this.fourMonthAgoBalance += this.fourMonthAgoRef[i].wert; }
-                      this.fourMonthAgoBalance = this.monthlyBudget - this.fourMonthAgoBalance
-                      this.fillData()
-                    })
-                })
-      }
+            oneMonthAgoRef.get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {vm.oneMonthAgoBalance += doc.get("wert");});
+                vm.oneMonthAgoBalance = vm.monthlyBudget - vm.oneMonthAgoBalance;
+
+            });
+
+            twoMonthAgoRef.get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {vm.twoMonthAgoBalance += doc.get("wert");});
+                vm.twoMonthAgoBalance = vm.monthlyBudget - vm.twoMonthAgoBalance;
+            });
+
+            threeMonthAgoRef.get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {vm.threeMonthAgoBalance += doc.get("wert");});
+                vm.threeMonthAgoBalance = vm.monthlyBudget - vm.threeMonthAgoBalance;
+            });
+
+            fourMonthAgoRef.get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {vm.fourMonthAgoBalance += doc.get("wert");});
+                vm.fourMonthAgoBalance = vm.monthlyBudget - vm.fourMonthAgoBalance;
+                vm.fillData();
+            });
+        });
+    }
   }
 </script>
 

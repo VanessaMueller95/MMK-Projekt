@@ -44,26 +44,46 @@
         data(){
             return{
                 einnahmen: [],
-                newDate: null,
-                wert: null
+                newDate: new Date(),
+                wert: null,
+                wholeBudget: 0.0
             }
         },
         methods:{
             addIncome(wert, newDate){
+                var vm = this;
                 var timestamp = firebase.firestore.Timestamp.fromDate(new Date(newDate));
                 db.collection('einnahmen').add({datum: timestamp, wert: wert});
+                vm.wholeBudget = vm.wholeBudget+wert;
+                db.collection('budget').doc('gesamtbudget').update({wert:vm.wholeBudget});
                 this.newDate = null,
-                this.wert = null
+                this.wert = null,
+                alert(this.$i18n.t('incomeInfo'));
 
             },
             deleteIncome(id){
-                db.collection('einnahmen').doc(id).delete();
+                var value = 0;
+                var vm = this;
+                db.collection('einnahmen').doc(id).get().then(function(doc) {
+                   value = doc.data().wert;
+                   vm.wholeBudget = vm.wholeBudget-value;
+                   db.collection('budget').doc('gesamtbudget').update({wert:vm.wholeBudget});
+                   db.collection('einnahmen').doc(id).delete();
+                });
             }
         },
         firestore (){
             return {
                 einnahmen: db.collection('einnahmen').orderBy("datum","desc")
             }
+        },
+        created(){
+            var WholeBudgetRef = db.collection('budget').doc('gesamtbudget');
+            var vm= this;
+
+            WholeBudgetRef.get().then(function(doc) {
+                vm.wholeBudget = doc.data().wert;
+            });
         },
         filters: {
             formatDate: function(value) {
@@ -83,29 +103,27 @@
 
 <style scoped>
 
-    #incomeForm{padding: 10px 15px 10px 15px; width: 100%;}
+    #incomeForm{padding: 10px 15px 10px 15px;}
 
-    h1{font-size: 3vw; margin-bottom: 50px; color: #2E3754;}
+    h1{margin-bottom: 50px; color: #2E3754;}
 
-    h2{font-size: 1.5vw; margin-top: 30px;}
+    h2{font-size: 28px; margin-top: 30px;}
 
-    table{width: 55%; text-align: center;}
-
-    tr{width: 80%;}
+    table{width: 650px; text-align: center;}
 
     tr:nth-child(even) {background: white;}
 
-    td {width: 30%; padding: 3px; border-bottom-color: white; border-bottom-width: 3px; font-size: 14px}
+    td {padding: 3px; border-bottom-color: white; border-bottom-width: 3px; font-size: 14px}
 
-    input{height: 40px; width: 65%; padding: 5px; min-width: 300px;}
+    input{height: 40px; width: 400px; padding: 5px; min-width: 300px;}
 
-    .label{ width: 35%; padding-top: 8px; min-width: 200px;}
+    .label{width: 250px; padding-top: 8px; min-width: 200px;}
 
-    .row{margin-right: 50px; width: 100%; padding-left: 20px; padding-bottom: 40px; width: 55%;}
+    .row{margin-right: 50px; width: 100%; padding-left: 20px; padding-bottom: 40px;}
 
     .containerInput{margin-top: 50px; margin: auto;}
 
-    #submitButton{background-color: #13B4B6; border: none; color: white; padding: 10px 32px; width: 55%; text-align: center; text-decoration: none; font-size: 16px; margin-left: 5px; margin-bottom: 30px;}
+    #submitButton{background-color: #13B4B6; border: none; color: white; padding: 10px 32px; width: 650px; text-align: center; text-decoration: none; font-size: 16px; margin-left: 5px; margin-bottom: 30px;}
 
     #tabelleEinnahmen{margin-top: 20px; margin-left: 5px;}
 

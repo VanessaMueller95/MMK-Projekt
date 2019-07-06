@@ -5,7 +5,7 @@
                 <div class="gesamtText">
                     <p>
                         <span class="text">{{ $t('budget') }} </span><br>
-                        <span class="money">{{bud}} {{$t('currency')}}</span> 
+                        <span class="money">{{wholeBudget}} {{$t('currency')}}</span> 
                     </p>
                 </div>
             </div>
@@ -28,68 +28,33 @@
         name:"chart2",
         data(){
             return{
-                einnahmen: [],
-                ausgaben: [],
                 budget: 0.0,
                 spendings: 0.0,
-                wholeBudgetDoc: {},
-                bud: 0.0,
-                monthBudget: 0.0,
-                thisMonthRef: [],
-                monthBudgetRef: [],
                 thisMonthBalance: 0,
                 currentMonth : new Date(new Date().getFullYear(),new Date().getMonth(), 1),
                 nextMonth : new Date(new Date().getFullYear(),new Date().getMonth()+1, 1),
+                wholeBudget: 0.0
             };
         },
-        
-        methods:{
-            calculateBudget(){
-                var i;
-                for (i = 0; i < this.einnahmen.length; i++) {
-                    this.budget = this.budget + this.einnahmen[i].wert;
-                } 
-            },
-            calculateSpendings(){
-                var i;
-                for (i = 0; i < this.ausgaben.length; i++) {
-                    this.spendings = this.spendings + this.ausgaben[i].wert;
-                } 
-            },         
-        },
-        mounted(){
-            this.$bind('einnahmen', db.collection('einnahmen'))
-                .then(() => {
-                    this.calculateBudget()
-                })
-                .catch((error) => {
-                    console.log('error in loading: ', error)
-                })
-            this.$bind('ausgaben', db.collection('ausgaben'))
-                .then(() => {
-                    this.calculateSpendings()
-                })
-                .catch((error) => {
-                    console.log('error in loading: ', error)
-                })
-            this.$bind("wholeBudgetDoc", db.collection('budget').doc('gesamtbudget'))
-                .then((doc) => {
-                    this.bud= doc.wert; 
-                this.bud= (this.budget-this.spendings).toFixed(2);
-                }).catch(err => {
-                    console.error(err)
-                })
-            this.$bind("monthBudgetRef", db.collection('budget').doc('monatsbudget'))
-                .then((doc) => {
-                    this.monthBudget= doc.wert;
+        created(){
+            var MonthBudgetRef = db.collection('budget').doc('monatsbudget');
+            var WholeBudgetRef = db.collection('budget').doc('gesamtbudget');
+            var newAusgabenMonth = db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth);
 
-                    this.$bind('thisMonthRef', db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth))
-                    .then(() => {
-                      var i;
-                      for (i = 0; i < this.thisMonthRef.length; i++) {this.thisMonthBalance += this.thisMonthRef[i].wert; }
-                      this.thisMonthBalance = (this.monthBudget - this.thisMonthBalance).toFixed(2);
-                    })
-                })
+            var vm = this;
+
+            WholeBudgetRef.get().then(function(doc) {
+                vm.wholeBudget = (doc.data().wert).toFixed(2);
+            });
+
+            MonthBudgetRef.get().then(function(doc) {
+                var gesAusgabenMonth = 0;
+                vm.thisMonthBalance = doc.data().wert;
+                newAusgabenMonth.get().then(function(querySnapshot) {
+                    querySnapshot.forEach(function(doc) {gesAusgabenMonth += doc.get("wert");});
+                    vm.thisMonthBalance = (vm.thisMonthBalance - gesAusgabenMonth).toFixed(2);
+                });
+            });
         }
     };
 

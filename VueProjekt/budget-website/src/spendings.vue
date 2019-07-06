@@ -25,6 +25,13 @@
             <button id="submitButton" type="submit">{{ $t('add') }}</button>
         </div>
         </form>
+        <form id="changeBudget" v-on:submit.prevent="updateBudget()">
+            <div class="row">
+                <div class="label">{{ $t('setBudget') }}</div>
+                <input id="budgetInput" v-model.number="monthBudget" type="number" step="0.01">
+                <button id="saveButton" type="submit">{{ $t('add') }}</button>
+            </div>
+        </form>
         <h2>{{ $t('allSpendings') }}</h2>
         <div id="tabelleEinnahmen">
             <table>
@@ -40,7 +47,7 @@
                     <td>{{ ausgabe.wert }} {{ $t('currency') }} </td>
                     <td>{{ ausgabe.kategorie }} </td>
                     <td>{{ ausgabe.datum | formatDate }} </td>
-                    <td><button class="deleteButton" @click="deleteIncome(ausgabe.id)">{{ $t('delete') }}</button> </td>
+                    <td><button class="deleteButton" @click="deleteSpending(ausgabe.id)">{{ $t('delete') }}</button> </td>
                 </tr>
             </table>
         </div>
@@ -57,27 +64,61 @@
         data(){
             return{
                 ausgaben: [],
-                newDate: null,
+                newDate: new Date(),
                 wert: null,
-                kategorie: null
+                kategorie: null,
+                monthBudget: null,
+                wholeBudget: 0
             }
         },
         methods:{
             addSpending(wert, newDate, kategorie){
+                var vm= this;
                 var timestamp = firebase.firestore.Timestamp.fromDate(new Date(newDate));
                 db.collection('ausgaben').add({datum: timestamp, wert: wert, kategorie: kategorie});
-                this.newDate = null,
-                this.wert = null,
-                this.kategorie = null
+                
+                vm.wholeBudget = vm.wholeBudget-wert;
+                db.collection('budget').doc('gesamtbudget').update({wert:vm.wholeBudget});
+
+                this.newDate = null;
+                this.wert = null;
+                this.kategorie = null;
+                alert(this.$i18n.t('spendingInfo'));
             },
-            deleteIncome(id){
-                db.collection('ausgaben').doc(id).delete();
+            deleteSpending(id){
+                var value = 0;
+                var vm = this;
+                db.collection('ausgaben').doc(id).get().then(function(doc) {
+                   value = doc.data().wert;
+                   vm.wholeBudget = vm.wholeBudget+value;
+                   db.collection('budget').doc('gesamtbudget').update({wert:vm.wholeBudget});
+                   db.collection('ausgaben').doc(id).delete();
+                });
+            },
+            updateBudget(){
+                db.collection('budget').doc('monatsbudget').update({wert:this.monthBudget});
+                alert(this.$i18n.t('budgetInfo'));
             }
         },
         firestore (){
             return {
                 ausgaben: db.collection('ausgaben').orderBy("datum","desc")
             }
+        },
+        created(){
+            var MonthBudgetRef = db.collection('budget').doc('monatsbudget');
+            var WholeBudgetRef = db.collection('budget').doc('gesamtbudget');
+
+            var vm = this;
+
+            MonthBudgetRef.get().then(function(doc) {
+                vm.monthBudget = doc.data().wert;
+            });
+
+            WholeBudgetRef.get().then(function(doc) {
+                vm.wholeBudget = doc.data().wert;
+            });
+
         },
         filters: {
             formatDate: function(value) {
@@ -92,29 +133,33 @@
 </script>
 
 <style scoped>
-    #incomeForm{padding-top: 10px; padding-bottom: 10px; padding-left: 15px; padding-right: 15px; width: 100%;}
+    #incomeForm{padding-top: 10px; padding-bottom: 10px; padding-left: 15px; padding-right: 15px;}
 
-    h1{font-size: 3vw; margin-bottom: 50px; color: #2E3754;}
+    h1{margin-bottom: 50px; color: #2E3754;}
 
-    h2{font-size: 1.5vw; margin-top: 30px;}
+    h2{font-size: 28px; margin-top: 30px;}
 
-    table{width: 55%; text-align: center;}
-
-    tr{width: 80%;}
+    table{width: 650px; text-align: center;}
 
     tr:nth-child(even) {background: white;}
 
-    td {width: 30%; padding: 3px; border-bottom-color: white; border-bottom-width: 3px; font-size: 14px}
+    td {padding: 3px; border-bottom-color: white; border-bottom-width: 3px; font-size: 14px}
 
-    input, select{height: 40px; width: 65%; padding: 5px; min-width: 300px;}
+    #changeBudget{margin-top: 40px}
 
-    .label{width: 35%; padding-top: 8px; min-width: 200px;}
+    input, select{height: 40px; width: 400px; padding: 5px}
+    
+    #budgetInput{width: 190px; min-width: 180px;}
 
-    .row{margin-right: 50px; width: 100%; padding-left: 20px; padding-bottom: 40px; width: 55%;}
+    .label{width: 250px; padding-top: 8px; min-width: 200px;}
+
+    .row{margin-right: 50px; width: 100%; padding-left: 20px; padding-bottom: 40px; }
 
     .containerInput{margin-top: 50px; margin: auto;}
 
-    #submitButton{background-color: #13B4B6; border: none; color: white; padding: 10px 32px; width: 55%; text-align: center; text-decoration: none; font-size: 16px; margin-left: 5px; margin-bottom: 30px;}
+    #submitButton, #saveButton{background-color: #13B4B6; border: none; color: white; padding: 10px 32px; width: 650px; text-align: center; text-decoration: none; font-size: 16px; margin-left: 5px; margin-bottom: 30px;}
+
+    #saveButton{width:190px; padding: 8px 32px; margin-left: 20px;}
 
     #tabelleEinnahmen{margin-top: 20px; margin-left: 5px;}
 

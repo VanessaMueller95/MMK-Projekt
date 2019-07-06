@@ -19,7 +19,6 @@ import db from "@/db.js"
       data () {
         return {
           datacollection: {},
-          refRent: [], refCar: [], refElectricity: [], refFood: [], refClothes: [], refOthers: [],
           spendingsRent: 0, spendingsCar: 0, spendingsElectricity: 0, spendingsFood: 0, spendingsClothes: 0, spendingsOthers: 0,
           currentMonth : new Date(new Date().getFullYear(),new Date().getMonth(), 1),
           nextMonth : new Date(new Date().getFullYear(),new Date().getMonth()+1, 1),
@@ -49,58 +48,42 @@ import db from "@/db.js"
           }
         }
       },
-      mounted(){
-            this.$bind('refRent', db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth).where("kategorie", "==", "miete"))
-                    .then(() => {
-                      var i;
-                      for (i = 0; i < this.refRent.length; i++) {this.spendingsRent += this.refRent[i].wert; }
-                    })
-                    .catch((error) => {
-                        console.log('error in loading: ', error)
-                    })
-            this.$bind('refCar', db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth).where("kategorie", "==", "auto"))
-                    .then(() => {
-                      var i;
-                      for (i = 0; i < this.refCar.length; i++) {this.spendingsCar += this.refCar[i].wert;}
-                    })
-                    .catch((error) => {
-                        console.log('error in loading: ', error)
-                    })
-            this.$bind('refElectricity', db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth).where("kategorie", "==", "strom"))
-                    .then(() => {
-                      var i;
-                      for (i = 0; i < this.refElectricity.length; i++) {this.spendingsElectricity += this.refElectricity[i].wert;}
-                    })
-                    .catch((error) => {
-                        console.log('error in loading: ', error)
-                    })
-            this.$bind('refFood', db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth).where("kategorie", "==", "essen"))
-                    .then(() => {
-                      var i;
-                      for (i = 0; i < this.refFood.length; i++) {this.spendingsFood += this.refFood[i].wert;}
-                    })
-                    .catch((error) => {
-                        console.log('error in loading: ', error)
-                    })
-            this.$bind('refClothes', db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth).where("kategorie", "==", "kleidung"))
-                    .then(() => {
-                      var i;
-                      for (i = 0; i < this.refClothes.length; i++) {this.spendingsClothes += this.refClothes[i].wert;}
-                    })
-                    .catch((error) => {
-                        console.log('error in loading: ', error)
-                    })
-            this.$bind('refOthers', db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth).where("kategorie", "==", "sonstiges"))
-                    .then(() => {
-                      var i;
-                      for (i = 0; i < this.refOthers.length; i++) {this.spendingsOthers += this.refOthers[i].wert;}
-                      this.fillData()
-                    })
-                    .catch((error) => {
-                        console.log('error in loading: ', error)
-                    })
-        },
-        computed: {
+      created(){
+        var refRent = db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth).where("kategorie", "==", "miete")
+        var refCar = db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth).where("kategorie", "==", "auto")
+        var refElectricity = db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth).where("kategorie", "==", "strom")
+        var refFood = db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth).where("kategorie", "==", "essen")
+        var refClothes = db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth).where("kategorie", "==", "kleidung")
+        var refOthers = db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth).where("kategorie", "==", "sonstiges")
+
+        var vm = this;
+
+        refRent.get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {vm.spendingsRent += doc.get("wert");});
+        });
+
+        refCar.get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {vm.spendingsCar += doc.get("wert");});
+        });
+
+        refElectricity.get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {vm.spendingsElectricity += doc.get("wert");});
+        });
+
+        refFood.get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {vm.spendingsFood += doc.get("wert");});
+        });
+
+        refClothes.get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {vm.spendingsClothes += doc.get("wert");});
+        });
+
+        refOthers.get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {vm.spendingsOthers += doc.get("wert");});
+            vm.fillData();
+        });
+      },
+      computed: {
         myStyles () {
           return {
             height: '150px',

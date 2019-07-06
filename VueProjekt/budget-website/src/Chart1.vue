@@ -16,9 +16,7 @@
         },
         data () {
             return {
-                ausgabenMonth: [],
                 gesAusgabenMonth: 0.0,
-                monthBudgetRef: [],
                 monthBudget: 0,
                 leftDays: 0,
                 pastDays: 0,
@@ -39,13 +37,6 @@
             },
             daysInMonth (month, year) {
                 return new Date(year, month, 0).getDate();
-            },
-            calculateSpendings(){
-                var i;
-                for (i = 0; i < this.ausgabenMonth.length; i++) {
-                    this.gesAusgabenMonth = this.gesAusgabenMonth + this.ausgabenMonth[i].wert;
-                }
-                this.gesAusgabenMonth = this.gesAusgabenMonth; 
             },
             fillData(){
                 var label1 = this.$i18n.t('label1');
@@ -106,25 +97,22 @@
                 }
             },
         },
-        mounted() {
-            this.calculateDaysInMonth(),
-            this.$bind('ausgabenMonth', db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth))
-                    .then(() => {
-                        this.calculateSpendings()
-                        this.$bind("monthBudgetRef", db.collection('budget').doc('monatsbudget'))
-                            .then((doc) => {
-                                this.monthBudget= doc.wert;
-                            })
-                            .then(() => {
-                                this.monthBudget = this.monthBudget - this.gesAusgabenMonth;
-                                this.fillData()
-                            }).catch(err => {
-                                console.error(err)
-                            })
-                        })
-                    .catch((error) => {
-                        console.log('error in loading: ', error)
-                    })
+        created(){
+            var newAusgabenMonth = db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth);
+            var newMonthBudgetRef = db.collection('budget').doc('monatsbudget');
+
+            var vm = this;
+
+            vm.calculateDaysInMonth();
+
+            newMonthBudgetRef.get().then(function(doc) {
+                vm.monthBudget = doc.data().wert;
+                newAusgabenMonth.get().then(function(querySnapshot) {
+                    querySnapshot.forEach(function(doc) {vm.gesAusgabenMonth += doc.get("wert");});
+                    vm.monthBudget -= vm.gesAusgabenMonth;
+                    vm.fillData();
+                });
+            });
         }
     }
 </script>
@@ -138,3 +126,4 @@
     p{padding-bottom: 0px; margin-bottom: 5px;}
 
 </style>
+
