@@ -9,7 +9,7 @@
             </div>
             <div class="row">
                 <div class="label">{{ $t('valueSpending') }}</div>
-                <input v-model.number="wert" type="number" step="0.01" placeholder="0"><br>
+                <input v-model.number="wert" type="number" step="0.01" placeholder="0" min="0"><br>
             </div>
             <div class="row">
                 <div class="label">{{ $t('catSpending') }}</div>
@@ -28,7 +28,7 @@
         <form id="changeBudget" v-on:submit.prevent="updateBudget()">
             <div class="row">
                 <div class="label">{{ $t('setBudget') }}</div>
-                <input id="budgetInput" v-model.number="monthBudget" type="number" step="0.01">
+                <input id="budgetInput" v-model.number="monthBudget" type="number" step="0.01" min="0">
                 <button id="saveButton" type="submit">{{ $t('add') }}</button>
             </div>
         </form>

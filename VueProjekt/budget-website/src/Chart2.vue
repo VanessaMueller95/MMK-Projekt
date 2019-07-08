@@ -38,9 +38,9 @@
         },
         created(){
             var MonthBudgetRef = db.collection('budget').doc('monatsbudget');
-            var WholeBudgetRef = db.collection('budget').doc('gesamtbudget');
             var newAusgabenMonth = db.collection('ausgaben').where("datum", ">", this.currentMonth).where("datum", "<", this.nextMonth);
 
+            var WholeBudgetRef = db.collection('budget').doc('gesamtbudget');
             var vm = this;
 
             WholeBudgetRef.get().then(function(doc) {

@@ -9,7 +9,7 @@
             </div>
             <div class="row">
                 <div class="label">{{ $t('valueIncome') }}</div>
-                <input v-model.number="wert" type="number" step="0.01" placeholder="0"><br>
+                <input v-model.number="wert" type="number" step="0.01" placeholder="0" min="0"><br>
             </div>
             <button id="submitButton" type="submit">{{ $t('add') }}</button>
         </div>
